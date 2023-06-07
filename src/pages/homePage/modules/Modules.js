@@ -43,10 +43,11 @@ const Modules = (props) => {
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {props?.data.map((module, index) => {
           return (
-            <Box key={module.module_title}>
+            <Box key={module.Title}>
               <ReusableCard
-                title={`module ${index + 1} : ${module.module_title}`}
-                content={module.description}
+              type={props.type}
+                title={`module ${index + 1} : ${module.Title}`}
+                content={module.Description}
                 icon={
                   <LazyLoadImage
                     height="71.2px"
@@ -55,7 +56,7 @@ const Modules = (props) => {
                     alt="moduleIcon"
                   />
                 }
-                onClick={() => props.onClick(module.module_title, index + 1)}
+                onClick={() => props.onClick(module.Title, index + 1)}
               />
             </Box>
           );

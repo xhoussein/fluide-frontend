@@ -12,7 +12,7 @@ const Scrollable = ({ data, id, sliderCardSubmitHandler }) => {
         {data?.map((module, index) => {
           return (
             <Box
-              key={module.module_title}
+              key={module.Title}
               sx={{
                 opacity: id - 1 === index ? 0.5 : 1,
                 "&:hover": {
@@ -21,7 +21,7 @@ const Scrollable = ({ data, id, sliderCardSubmitHandler }) => {
               }}
             >
               <LeassonCard
-                key={module.module_title}
+                key={module.Title}
                 icon={
                   <LazyLoadImage
                     src={lessonIcon}
@@ -30,10 +30,10 @@ const Scrollable = ({ data, id, sliderCardSubmitHandler }) => {
                     alt="moduleIcon"
                   />
                 }
-                title={`Module ${index + 1} : ${module.module_title}`}
+                title={`Module ${index + 1} : ${module.Title}`}
                 className={`cardSlider ${id - 1 === index ? "selected" : ""}`}
                 onButtonClick={() =>
-                  sliderCardSubmitHandler(module.module_title, index + 1)
+                  sliderCardSubmitHandler(module.Title, index + 1)
                 }
               />
             </Box>

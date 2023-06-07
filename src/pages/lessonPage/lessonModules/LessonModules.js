@@ -26,14 +26,14 @@ const LessonModules = ({ onClick, handlerClick }) => {
         {lessonData
           .filter((lesson) => !lesson?.module_name)
           ?.map((lesson, index) => {
-            const lessonTitle = `Lesson ${index + 1} : ${lesson.lesson_title}`;
+            const lessonTitle = `Lesson ${index + 1} : ${lesson.Title}`;
             return (
               <LeassonCard
                 onClick={onClick}
                 lessonTitleIndex={index}
                 handlerClick={handlerClick}
                 lesson={lesson}
-                key={lesson.lesson_title}
+                key={lesson.Title}
                 className={`lessonModuleCard`}
                 title={
                   <div
@@ -44,7 +44,7 @@ const LessonModules = ({ onClick, handlerClick }) => {
                       alignItems: "center",
                       justifyContent: "center",
                       width:
-                        lesson.lesson_title.length <= 20 // Check the length of the title string
+                        lesson.Title.length <= 20 // Check the length of the title string
                           ? isMobile
                             ? "300px"
                             : "400px" // Set width to 400px if title is short
@@ -65,9 +65,9 @@ const LessonModules = ({ onClick, handlerClick }) => {
                   </div>
                 }
                 list={
-                  lesson.chapter_title
-                    ? lesson.chapter_title
-                    : lesson.chapter_titles
+                  lesson.Chapter
+                    ? lesson.Chapter
+                    : lesson.Chapters
                 }
               />
             );

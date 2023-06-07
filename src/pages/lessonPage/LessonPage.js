@@ -124,19 +124,19 @@ const LessonPage = () => {
     searchParams.set("page", "description");
     setSearchParams(searchParams);
     localStorage.removeItem("nextLessonData");
-    dispatch(viewLessonData(data.lesson_title));
-    const lessonTitle = `Lesson ${indexId + 1} : ${data.lesson_title}`;
+    dispatch(viewLessonData(data.Title));
+    const lessonTitle = `Lesson ${indexId + 1} : ${data.Title}`;
     setDescriptionData({
       module_name: capitalizedModuleName,
       level: searchData.level,
       language: searchData.language,
-      lesson_name: data.lesson_title,
-      activity_name:data.chapter_titles[0],
+      lesson_name: data.Title,
+      activity_name:data.Chapters[0],
     });
     setIsDescription(true);
     setLessonIndex(indexId);
     setLessonTitle(lessonTitle);
-    setSpecificLessonTitle(data.chapter_titles[0]);
+    setSpecificLessonTitle(data.Title[0]);
   };
 
   const listClickHandler = (value, lessonData, index) => {
@@ -145,12 +145,12 @@ const LessonPage = () => {
     setSearchParams(searchParams);
     localStorage.removeItem("nextLessonData");
     dispatch(viewLessonData(value));
-    const lessonTitle = `Lesson ${index + 1} : ${lessonData.lesson_title}`;
+    const lessonTitle = `Lesson ${index + 1} : ${lessonData.Title}`;
     setDescriptionData({
       module_name: capitalizedModuleName,
       level: searchData.level,
       language: searchData.language,
-      lesson_name: lessonData.lesson_title,
+      lesson_name: lessonData.Title,
       activity_name: value,
     });
     setIsDescription(true);

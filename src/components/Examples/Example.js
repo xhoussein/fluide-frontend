@@ -156,7 +156,7 @@ const Example = ({
               {exampleheader}
             </Typography>
           </Box>
-          <Box sx={style.iconbox}>
+          {/* <Box sx={style.iconbox}>
             <img
               style={isMobile ? mobile.iconstyle : style.iconstyle}
               src={copyIcon}
@@ -172,7 +172,7 @@ const Example = ({
               src={dislikeIcon}
               alt="likeIcon"
             />
-          </Box>
+          </Box> */}
         </Box>
         <Box sx={isMobile ? mobile.contentBox : style.contentBox}>
           <Box sx={{ margin: "20px 0px" }}>
@@ -185,6 +185,9 @@ const Example = ({
               {examplepara
                 ? examplepara
                 : exampleStreamData?.map((word, index) => {
+                  if (/\d/.test(word)) {
+                    return `${" "}${word}`;
+                  }
                     // Check if the word is empty (space)
                     if (word === "") {
                       // Get the next word

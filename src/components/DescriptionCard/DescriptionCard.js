@@ -295,7 +295,7 @@ const DescriptionCard = ({
             </Typography>
           </Box>
 
-          <Box sx={style.iconbox}>
+          {/* <Box sx={style.iconbox}>
             <img
               style={isMobile ? mobile.iconstyle : style.iconstyle}
               src={copyIcon}
@@ -311,11 +311,14 @@ const DescriptionCard = ({
               src={dislikeIcon}
               alt="likeIcon"
             />
-          </Box>
+          </Box> */}
         </Box>
         <Box sx={isMobile ? mobile.contentBox : style.contentBox}>
           <Typography variant="h5">
             {liveWords?.map((word, index) => {
+                if (/\d/.test(word)) {
+                  return `${" "}${word}`;
+                }
               // Check if the word is empty (space)
               if (word === "") {
                 // Get the next word

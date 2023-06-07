@@ -6,48 +6,50 @@ import { Typography, useMediaQuery } from "@mui/material";
 import SearchInput from "../searchInput/SearchInput";
 import ButtonComponent from "../button/Button";
 import Example from "../Examples/Example";
-import { toast } from "react-toastify";
 const AskQuestion = ({ descriptionData }) => {
   const [askMeQuestion, setAskMeQuestion] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const isMobile = useMediaQuery("(max-width:600px)");
-  const descriptionText = JSON.parse(localStorage.getItem("description"));
+
   const askQuestioChangeHandler = (e) => {
     setSearchValue(e.target.value);
   };
 
   const askQuestionSearchHandler = () => {
     setAskMeQuestion([]);
-    const ws = new WebSocket("ws://localhost:8081");
+    const eventSourceAskQuestion = new EventSource(
+      `http://localhost:8080/ask-question?language=${descriptionData.language}&question=${searchValue}`
+    );
 
-    ws.onmessage = (event) => {
-      const receivedData = JSON.parse(event.data);
-      setAskMeQuestion((prevData) => [...prevData, receivedData]);
+    eventSourceAskQuestion.onmessage = (event) => {
+      const data = event.data.split(" ");
+
+      const filteredData = [];
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].trim() === "") {
+          // Check if the next word exists and is also an empty string (consecutive spaces)
+          if (i + 1 < data.length && data[i + 1].trim() === "") {
+            // Skip this empty string
+            continue;
+          }
+        }
+        filteredData.push(data[i]);
+      }
+
+      setAskMeQuestion((prevWords) => [...prevWords, ...filteredData]);
     };
 
-    ws.onopen = (event) => {
+    eventSourceAskQuestion.onopen = (event) => {
       console.log("Connection opened");
-      const message = {
-        type: "ask-question",
-        payload: {
-          text: descriptionText,
-          level: descriptionData.level,
-          language: descriptionData.language,
-          question: searchValue,
-        },
-      };
-      ws.send(JSON.stringify(message));
+    };
+    eventSourceAskQuestion.onclose = () => {
+      console.log("Connection Closed");
     };
 
-    ws.onerror = (event) => {
-      console.log("WebSocket error:", event);
-      toast.error("Something went wrong");
-      ws.close();
-    };
-
-    ws.onclose = (event) => {
-      console.log("Connection closed");
-      ws.close();
+    eventSourceAskQuestion.onerror = () => {
+      console.log("Connection Error");
+      eventSourceAskQuestion.close();
     };
   };
 
@@ -60,7 +62,7 @@ const AskQuestion = ({ descriptionData }) => {
       <Box sx={isMobile ? mobile.searchbox : style.searchbox}>
         {" "}
         <SearchInput
-          styling="style"
+        styling="style"
           onChange={askQuestioChangeHandler}
           placeholder="Enter your question"
         />
@@ -77,10 +79,8 @@ const AskQuestion = ({ descriptionData }) => {
             exampletitle=" "
             exampleheader="Answer"
             exampleicon={askQuestionIcon}
-            examplepara={askMeQuestion?.map((word, index) => {
-              if (/\d/.test(word)) {
-                return `${" "}${word}`;
-              }
+            examplepara={
+              askMeQuestion?.map((word, index) => {
               // Check if the word is empty (space)
               if (word === "") {
                 // Get the next word
@@ -98,7 +98,12 @@ const AskQuestion = ({ descriptionData }) => {
               }
 
               // Render the word
-              return <span key={index}>{word}</span>;
+              return (
+                <span key={index}>
+                  {word}
+                  {word === "" ? " " : ""}
+                </span>
+              );
             })}
           />
         )}
