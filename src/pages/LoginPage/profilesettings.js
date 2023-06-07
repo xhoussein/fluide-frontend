@@ -362,7 +362,7 @@ const Profilesettings = () => {
                   color: "gray",
                   position: "absolute",
                   top: "100px",
-                  left: "35px",
+                  left: "30px",
                   cursor: "pointer",
                   "&:hover": {
                     color: "blue",

@@ -8,7 +8,15 @@ import {
 import { style } from "./style";
 
 
-function Dropdown({ options, defaultOption, onChange, name, selectedValue }) {
+
+
+
+function Dropdown({ options, defaultOption, onChange, name, selectedValue,disabledOptions }) {
+  const englishValue = "english";
+
+
+
+
   return (
     <FormControl sx={style.formControl}>
       <InputLabel
@@ -39,7 +47,7 @@ function Dropdown({ options, defaultOption, onChange, name, selectedValue }) {
         name={name}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option.value}  disabled={disabledOptions?.includes(option?.value)} value={option.value}>
             <Typography variant="h6">{option.label}</Typography>
           </MenuItem>
         ))}

@@ -26,6 +26,7 @@ export default function ReusableCard({
   onButtonClick,
   lesson,
   lessonTitleIndex,
+  type,
   ...rest
 }) 
 {
@@ -97,7 +98,7 @@ export default function ReusableCard({
           <ButtonComponent
             onClick={() => rest.onClick(lesson, lessonTitleIndex)}
           >
-            view Lesson{" "}
+           {type ? "View Module" : "View Lessons" }
             {
               <img
                 src={arrowrightup}

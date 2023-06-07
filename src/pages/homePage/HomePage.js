@@ -153,11 +153,12 @@ const HomePage = () => {
             name="levels"
           />
           <Dropdown
-            defaultOption="Select Languages"
+            defaultOption="Select Language"
             options={languages}
             onChange={dropdownOnChnageHandler}
             name="languages"
             selectedValue={options.languages}
+            disabledOptions={["spanish", "mandarin", "hindi", "french", "arabic", "bengali", "portuguese", "german", "japanese"]}
           />
         </Box>
 
@@ -211,7 +212,7 @@ const HomePage = () => {
         </Box>
         <Box sx={{ marginTop: "2rem" }}>
           {data?.length > 0 && (
-            <Modules data={data} onClick={viewLessonButtonHandler} />
+            <Modules data={data} onClick={viewLessonButtonHandler} type="description"  />
           )}
         </Box>
       </Box>
